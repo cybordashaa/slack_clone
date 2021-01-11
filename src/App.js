@@ -10,8 +10,9 @@ import MetaPanel from "./components/MetaPanel/MetaPanel";
 function App({ currentUser }) {
   return (
     <Grid columns="equal" className="app" style={{ background: "#eee" }}>
-      <SidePanel currentUser={currentUser} />
+      
       <ColorPanel />
+      <SidePanel currentUser={currentUser} />
       <Grid.Column style={{ marginLeft: 320 }}>
         <Messages />
       </Grid.Column>
