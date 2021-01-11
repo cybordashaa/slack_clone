@@ -4,6 +4,7 @@ import firebase from "../../firebaseconifg";
 import { Segment, Button, Input } from "semantic-ui-react";
 
 import FileModal from "./FileModal";
+import ProgressBar from "./ProgressBar";
 
 class MessageForm extends React.Component {
   state = {
@@ -16,14 +17,14 @@ class MessageForm extends React.Component {
     user: this.props.currentUser,
     loading: false,
     errors: [],
-    modal: false
+    modal: false,
   };
 
   openModal = () => this.setState({ modal: true });
 
   closeModal = () => this.setState({ modal: false });
 
-  handleChange = event => {
+  handleChange = (event) => {
     this.setState({ [event.target.name]: event.target.value });
   };
 
@@ -33,8 +34,8 @@ class MessageForm extends React.Component {
       user: {
         id: this.state.user.uid,
         name: this.state.user.displayName,
-        avatar: this.state.user.photoURL
-      }
+        avatar: this.state.user.photoURL,
+      },
     };
     if (fileUrl !== null) {
       message["image"] = fileUrl;
@@ -57,16 +58,16 @@ class MessageForm extends React.Component {
         .then(() => {
           this.setState({ loading: false, message: "", errors: [] });
         })
-        .catch(err => {
+        .catch((err) => {
           console.error(err);
           this.setState({
             loading: false,
-            errors: this.state.errors.concat(err)
+            errors: this.state.errors.concat(err),
           });
         });
     } else {
       this.setState({
-        errors: this.state.errors.concat({ message: "Add a message" })
+        errors: this.state.errors.concat({ message: "Add a message" }),
       });
     }
   };
@@ -79,37 +80,37 @@ class MessageForm extends React.Component {
     this.setState(
       {
         uploadState: "uploading",
-        uploadTask: this.state.storageRef.child(filePath).put(file, metadata)
+        uploadTask: this.state.storageRef.child(filePath).put(file, metadata),
       },
       () => {
         this.state.uploadTask.on(
           "state_changed",
-          snap => {
+          (snap) => {
             const percentUploaded = Math.round(
               (snap.bytesTransferred / snap.totalBytes) * 100
             );
             this.setState({ percentUploaded });
           },
-          err => {
+          (err) => {
             console.error(err);
             this.setState({
               errors: this.state.errors.concat(err),
               uploadState: "error",
-              uploadTask: null
+              uploadTask: null,
             });
           },
           () => {
             this.state.uploadTask.snapshot.ref
               .getDownloadURL()
-              .then(downloadUrl => {
+              .then((downloadUrl) => {
                 this.sendFileMessage(downloadUrl, ref, pathToUpload);
               })
-              .catch(err => {
+              .catch((err) => {
                 console.error(err);
                 this.setState({
                   errors: this.state.errors.concat(err),
                   uploadState: "error",
-                  uploadTask: null
+                  uploadTask: null,
                 });
               });
           }
@@ -126,16 +127,23 @@ class MessageForm extends React.Component {
       .then(() => {
         this.setState({ uploadState: "done" });
       })
-      .catch(err => {
+      .catch((err) => {
         console.error(err);
         this.setState({
-          errors: this.state.errors.concat(err)
+          errors: this.state.errors.concat(err),
         });
       });
   };
 
   render() {
-    const { errors, message, loading, modal } = this.state;
+    const {
+      errors,
+      message,
+      loading,
+      modal,
+      percentUploaded,
+      uploadState,
+    } = this.state;
 
     return (
       <Segment className="message__form">
@@ -148,7 +156,7 @@ class MessageForm extends React.Component {
           label={<Button icon={"add"} />}
           labelPosition="left"
           className={
-            errors.some(error => error.message.includes("message"))
+            errors.some((error) => error.message.includes("message"))
               ? "error"
               : ""
           }
@@ -170,12 +178,16 @@ class MessageForm extends React.Component {
             labelPosition="right"
             icon="cloud upload"
           />
-          <FileModal
-            modal={modal}
-            closeModal={this.closeModal}
-            uploadFile={this.uploadFile}
-          />
         </Button.Group>
+        <FileModal
+          modal={modal}
+          closeModal={this.closeModal}
+          uploadFile={this.uploadFile}
+        />
+        <ProgressBar
+          uploadState={uploadState}
+          percentUploaded={percentUploaded}
+        />
       </Segment>
     );
   }
