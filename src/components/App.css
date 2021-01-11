@@ -31,9 +31,13 @@ body,
 .message__image {
   padding: 1em;
 }
+.message__progress {
+  height: 58vh;
+  overflow-y: scroll;
+}
 
 /* ProgressBar.js*/
 .progress__bar {
   margin: 0.3em 0 0 0 !important;
-  
+
 }
