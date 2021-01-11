@@ -7,7 +7,7 @@ var firebaseConfig = {
     apiKey: "AIzaSyB4KvmdFaNTJAgGVYOX20aanYX2D7Jcans",
     authDomain: "react-slack-clone-6253e.firebaseapp.com",
     projectId: "react-slack-clone-6253e",
-    storageBucket: "https://react-slack-clone-6253e.appspot.com",
+    storageBucket: "react-slack-clone-6253e.appspot.com",
     messagingSenderId: "732540207727",
     appId: "1:732540207727:web:1a5e379723277315af839a",
     measurementId: "G-PKWZMEEDX2"
