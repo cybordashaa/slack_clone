@@ -9,7 +9,7 @@ import Register from './components/Auth/Register';
 import firebase from './firebaseconifg';
 
 // redux
-import { createStore, applyMiddleware } from "redux";
+import { createStore,} from "redux";
 import { composeWithDevTools } from "redux-devtools-extension";
 import { Provider, connect } from 'react-redux';
 import rootReducer from './redux/reducers';
