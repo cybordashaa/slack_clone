@@ -4,6 +4,7 @@ import MessageForm from "./MessageForm";
 import MessagesHeader from "./MessagesHeader";
 import firebase from "../../firebaseconifg";
 import Message from "./Message";
+import Typing from "./Typing";
 import { connect } from 'react-redux';
 import { setUserPosts } from '../../redux/actions';
 class Messages extends React.Component {
@@ -205,6 +206,10 @@ class Messages extends React.Component {
               {searchTerm
                 ? this.displayMessages(searchResults)
                 : this.displayMessages(messages)}
+              <div style={{ display: "flex", alignItems: "center" }}>
+                <span className="user__typing">douglas is typing</span>
+                <Typing />
+              </div>
             </Comment.Group>
           </Container>
         </Segment>
