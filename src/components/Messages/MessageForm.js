@@ -92,7 +92,7 @@ class MessageForm extends React.Component {
 
   getPath = () => {
     if(this.props.isPrivateChannel){
-      return `chat/private-${this.state.channel.id}`;
+      return `chat/private/${this.state.channel.id}`;
     } else {
       return `chat/public`;
     }
@@ -100,7 +100,7 @@ class MessageForm extends React.Component {
 
   uploadFile = (file, metadata) => {
     const pathToUpload = this.state.channel.id;
-    const ref = this.props.getMessageRef();
+    const ref = this.props.getMessagesRef();
     const filePath = `${this.getPath()}/${uuidv4()}.jpg`;
 
     this.setState(
@@ -115,7 +115,7 @@ class MessageForm extends React.Component {
             const percentUploaded = Math.round(
               (snap.bytesTransferred / snap.totalBytes) * 100
             );
-            this.props.isProgressBarVisible(percentUploaded);
+            // this.props.isProgressBarVisible(percentUploaded);
             this.setState({ percentUploaded });
 
           },
