@@ -11,6 +11,12 @@ body,
   padding-bottom: 2em;
 }
 
+.emojipicker {
+  position: absolute;
+  bottom: '20px';
+  right: '20px'
+}
+
 /* Messages.js */
 .messages {
   height: 62vh;
