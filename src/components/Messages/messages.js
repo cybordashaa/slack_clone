@@ -7,6 +7,7 @@ import Message from "./Message";
 import Typing from "./Typing";
 import { connect } from 'react-redux';
 import { setUserPosts } from '../../redux/actions';
+import Skeleton from "./Skeleton";
 class Messages extends React.Component {
   state = {
     privateChannel: this.props.isPrivateChannel,
@@ -236,6 +237,15 @@ class Messages extends React.Component {
       </div>
     ));
 
+   displayMessageSkeleton = (loading) =>
+    loading ? (
+      <React.Fragment>
+        {[...Array(10)].map((_, i) => (
+          <Skeleton key={i} />
+        ))}
+      </React.Fragment>
+    ) : null;
+
   render() {
     const {
       messagesRef,
@@ -249,6 +259,7 @@ class Messages extends React.Component {
       privateChannel,
       isChannelStarred,
       typingUsers,
+      messagesLoading
     } = this.state;
 
     return (
@@ -266,6 +277,7 @@ class Messages extends React.Component {
         <Segment>
           <Container className="messages">
             <Comment.Group>
+              {this.displayMessageSkeleton(messagesLoading)}
               {searchTerm
                 ? this.displayMessages(searchResults)
                 : this.displayMessages(messages)}
